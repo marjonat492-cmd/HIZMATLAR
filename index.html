@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Davlat va kommunal xizmatlar bo‘yicha qidiruv va ma’lumot katalogi."
+    />
+    <title>Xizmatlar katalogi</title>
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Xizmatlar katalogi bosh sahifasi">
+        <span class="brand-mark" aria-hidden="true">X</span>
+        <span>Xizmatlar<span class="brand-muted">.uz</span></span>
+      </a>
+      <span class="header-label">Davlat xizmatlari katalogi</span>
+      <button id="admin-toggle" class="admin-toggle" type="button" aria-expanded="false">
+        Boshqaruv paneli
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-content">
+          <p class="eyebrow">FUQAROLAR UCHUN YO‘RIQNOMA</p>
+          <h1 id="page-title">Kerakli xizmatni oson toping</h1>
+          <p class="hero-description">
+            Davlat va kommunal xizmatlar haqida ma’lumotlarni qidiring,
+            toifalar bo‘yicha ko‘rib chiqing.
+          </p>
+          <label class="search-box" for="service-search">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input
+              id="service-search"
+              type="search"
+              placeholder="Masalan, elektr hisoblagich..."
+              autocomplete="off"
+            />
+            <kbd>⌕</kbd>
+          </label>
+          <div class="hero-note">
+            <span class="status-dot" aria-hidden="true"></span>
+            Rasmiy ma’lumotlar tegishli tashkilotlarda tekshirilishi kerak
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <div class="art-card">
+            <span class="art-card-icon">✓</span>
+            <span class="art-card-lines"><i></i><i></i><i></i></span>
+          </div>
+          <div class="art-badge">Xizmatlar<br /><strong>bir joyda</strong></div>
+        </div>
+      </section>
+
+      <section id="admin-panel" class="admin-panel" hidden aria-labelledby="admin-title">
+        <div class="section-heading admin-heading">
+          <div>
+            <p class="eyebrow section-eyebrow">MAHALLIY DEMO</p>
+            <h2 id="admin-title">Administrator paneli</h2>
+          </div>
+          <button id="admin-close" class="secondary-button" type="button">Panelni yopish</button>
+        </div>
+        <div class="demo-warning">
+          Bu namuna ma’lumotlarni faqat ushbu brauzerda saqlaydi. Kirish nazorati va
+          rollar xavfsiz emas; haqiqiy foydalanuvchilar uchun server va autentifikatsiya talab etiladi.
+        </div>
+
+        <div class="admin-tabs" role="tablist" aria-label="Administrator bo‘limlari">
+          <button class="admin-tab is-active" type="button" data-admin-tab="services">Xizmatlar</button>
+          <button class="admin-tab" type="button" data-admin-tab="attendance">Kutish vaqti</button>
+          <button class="admin-tab" type="button" data-admin-tab="reports">Fikrlar va hisobotlar</button>
+          <button class="admin-tab" type="button" data-admin-tab="access">Akkaunt va rollar</button>
+        </div>
+
+        <section class="admin-view" data-admin-view="services">
+          <div class="admin-card">
+            <h3>Xizmat ma’lumotlarini boshqarish</h3>
+            <form id="service-form" class="admin-form">
+              <input id="edit-service-id" type="hidden" />
+              <label class="form-field">
+                <span>Mavjud xizmatni tahrirlash</span>
+                <select id="service-picker"><option value="">Yangi xizmat qo‘shish</option></select>
+              </label>
+              <label class="form-field">
+                <span>Kategoriya</span>
+                <select id="service-category" required></select>
+              </label>
+              <label class="form-field form-wide"><span>Xizmat nomi</span><input id="service-name" required /></label>
+              <label class="form-field form-wide"><span>Xizmat tavsifi</span><textarea id="service-description" rows="2" required></textarea></label>
+              <label class="form-field form-wide"><span>Kerakli hujjatlar</span><textarea id="service-documents" rows="2"></textarea></label>
+              <label class="form-field"><span>Tashkilot nomi</span><input id="service-organization" /></label>
+              <label class="form-field"><span>Telefon raqami</span><input id="service-phone" type="tel" /></label>
+              <label class="form-field form-wide"><span>Tashkilot manzili</span><input id="service-address" /></label>
+              <label class="form-field form-wide"><span>Xarita havolasi yoki koordinatalar</span><input id="service-map" /></label>
+              <label class="form-field"><span>Ish kunlari</span><input id="service-work-days" /></label>
+              <label class="form-field"><span>Ish vaqti</span><input id="service-work-hours" /></label>
+              <label class="form-field"><span>Xizmat narxi</span><input id="service-fee" /></label>
+              <label class="form-field"><span>Taxminiy kutish vaqti</span><input id="service-wait-time" /></label>
+              <label class="form-field form-wide"><span>Rasmiy yozilish havolasi</span><input id="service-link" type="url" /></label>
+              <label class="form-field form-wide"><span>Murojaat qilish tartibi</span><textarea id="service-procedure" rows="2"></textarea></label>
+              <label class="form-field form-wide"><span>Olib boriladigan narsalar (har birini yangi qatordan yozing)</span><textarea id="service-preparation" rows="2"></textarea></label>
+              <label class="form-field form-wide"><span>Ma’lumot manbasi</span><input id="service-source" /></label>
+              <div class="form-actions form-wide">
+                <button class="primary-button" type="submit">Saqlash</button>
+                <button id="service-reset" class="secondary-button" type="button">Tozalash</button>
+                <button id="service-delete" class="danger-button" type="button" disabled>O‘chirish</button>
+              </div>
+            </form>
+            <p id="service-save-status" class="form-status" role="status"></p>
+            <div id="audit-list" class="audit-list"></div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-admin-view="attendance" hidden>
+          <div class="admin-card">
+            <h3>Fuqaro kelishi va xizmat ko‘rsatilishini qayd etish</h3>
+            <form id="arrival-form" class="inline-form">
+              <label class="form-field"><span>Xizmat</span><select id="arrival-service" required></select></label>
+              <button class="primary-button" type="submit">Kelgan vaqtni qayd etish</button>
+            </form>
+            <div class="metric-row">
+              <div class="metric-card"><span>Qaydlar</span><strong id="attendance-total">0</strong></div>
+              <div class="metric-card"><span>O‘rtacha kutish</span><strong id="attendance-average">—</strong></div>
+            </div>
+            <div id="attendance-list" class="record-list"></div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-admin-view="reports" hidden>
+          <div class="report-grid">
+            <div class="admin-card">
+              <h3>Eng ko‘p ko‘rilgan xizmatlar</h3>
+              <div id="popular-report" class="bar-report"></div>
+            </div>
+            <div class="admin-card">
+              <h3>Haqiqiy kutish vaqti</h3>
+              <div id="wait-report" class="bar-report"></div>
+            </div>
+            <div class="admin-card report-wide">
+              <h3>Fuqarolar fikrlari</h3>
+              <div id="feedback-report" class="feedback-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-admin-view="access" hidden>
+          <div class="admin-card">
+            <h3>Administrator akkauntlari va rollari</h3>
+            <p class="admin-copy">
+              Ushbu brauzer demo versiyasida akkaunt yaratish, parol saqlash yoki rollarni
+              xavfsiz tekshirish yoqilmagan. Haqiqiy tizimda administrator va xodim rollari
+              serverda boshqarilishi, kirishlar tekshirilishi va o‘zgarishlar audit jurnaliga yozilishi kerak.
+            </p>
+            <div class="role-list">
+              <div><strong>Administrator</strong><span>Xizmatlar va hisobotlarni boshqaradi</span></div>
+              <div><strong>Xodim</strong><span>Kelish va xizmat ko‘rsatish vaqtini qayd etadi</span></div>
+              <div><strong>Fuqaro</strong><span>Katalogni ko‘radi va fikr bildiradi</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="catalog-section" aria-labelledby="categories-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow section-eyebrow">KATALOG</p>
+            <h2 id="categories-title">Xizmat yo‘nalishlari</h2>
+          </div>
+          <span id="service-count" class="result-count" aria-live="polite"></span>
+        </div>
+
+        <nav id="category-list" class="category-list" aria-label="Xizmat toifalari"></nav>
+        <div id="service-list" class="service-list" aria-live="polite"></div>
+      </section>
+
+      <section class="source-notice" aria-label="Muhim eslatma">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p>
+          <strong>Muhim:</strong> Ushbu katalog boshlang‘ich ma’lumotnoma
+          hisoblanadi. Xizmatlarning rasmiy nomi, mavjudligi, hujjat talablari,
+          narxlari va havolalarini tegishli davlat manbalarida tekshiring.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Xizmatlar katalogi</span>
+      <span>Ma’lumotlar rasmiy manbalar asosida yangilanadi</span>
+    </footer>
+
+    <dialog id="service-dialog" class="service-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-header">
+        <div>
+          <p id="dialog-category" class="eyebrow section-eyebrow"></p>
+          <h2 id="dialog-title"></h2>
+        </div>
+        <button class="close-button" type="button" aria-label="Yopish">×</button>
+      </div>
+      <p id="dialog-description" class="dialog-description"></p>
+      <div id="dialog-fields" class="detail-grid"></div>
+      <div class="booking-actions">
+        <a id="booking-link" class="primary-button" target="_blank" rel="noopener noreferrer" hidden>Rasmiy yozilish sahifasiga o‘tish</a>
+        <a id="booking-phone" class="secondary-button" hidden></a>
+      </div>
+      <section class="preparation-section">
+        <h3>Borishdan oldin tayyorgarlik</h3>
+        <ul id="preparation-list"></ul>
+        <p id="preparation-note" class="preparation-note"></p>
+      </section>
+      <form id="feedback-form" class="feedback-form">
+        <div class="feedback-heading">
+          <span class="feedback-heading-icon" aria-hidden="true">★</span>
+          <div>
+            <h3>Xizmat haqida fikr qoldiring</h3>
+            <p>Baholang va istasangiz izoh yozing</p>
+          </div>
+        </div>
+        <input id="feedback-service-id" type="hidden" />
+        <fieldset class="rating-field">
+          <legend>Bahoyingiz</legend>
+          <div class="rating-options" role="radiogroup" aria-label="Xizmatga baho">
+            <label class="rating-option" title="1 — Juda yomon">
+              <input type="radio" name="feedback-rating" value="1" required aria-label="1 — Juda yomon" />
+              <span aria-hidden="true">★</span>
+            </label>
+            <label class="rating-option" title="2 — Yomon">
+              <input type="radio" name="feedback-rating" value="2" aria-label="2 — Yomon" />
+              <span aria-hidden="true">★</span>
+            </label>
+            <label class="rating-option" title="3 — Qoniqarli">
+              <input type="radio" name="feedback-rating" value="3" aria-label="3 — Qoniqarli" />
+              <span aria-hidden="true">★</span>
+            </label>
+            <label class="rating-option" title="4 — Yaxshi">
+              <input type="radio" name="feedback-rating" value="4" aria-label="4 — Yaxshi" />
+              <span aria-hidden="true">★</span>
+            </label>
+            <label class="rating-option" title="5 — A’lo">
+              <input type="radio" name="feedback-rating" value="5" aria-label="5 — A’lo" />
+              <span aria-hidden="true">★</span>
+            </label>
+          </div>
+          <span id="rating-label" class="rating-label" aria-live="polite">Bahoni tanlang</span>
+        </fieldset>
+        <label class="comment-field" for="feedback-comment">
+          <span class="comment-label">Izohlar <span>(ixtiyoriy)</span></span>
+          <textarea id="feedback-comment" rows="2" maxlength="500" placeholder="Qisqacha fikringiz..."></textarea>
+          <span class="comment-footer">
+            <span>Shaxsiy ma’lumotlaringizni yozmang</span>
+            <span id="comment-count" aria-live="polite">0/500</span>
+          </span>
+        </label>
+        <button class="primary-button feedback-submit" type="submit">Bahoni yuborish <span aria-hidden="true">→</span></button>
+        <p id="feedback-status" class="form-status" role="status"></p>
+        <section class="comments-section" aria-labelledby="comments-title">
+          <h4 id="comments-title">Foydalanuvchilar izohlari</h4>
+          <div id="service-comments" class="service-comments"></div>
+        </section>
+      </form>
+      <p class="dialog-notice">
+        Katalogdagi tasdiqlanmagan ma’lumotlar rasmiy xizmat ko‘rsatuvchi
+        tashkilot orqali aniqlashtirilishi lozim.
+      </p>
+    </dialog>
+  </body>
+</html>
